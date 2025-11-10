@@ -12,6 +12,7 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
+    score = 0
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -46,9 +47,15 @@ def main():
 
         for asteroid in asteroids:
             if asteroid.collides_with(player):
-                log_event("player hit")
+                log_event("Player Hit")
+                print(f"SCORE: {score}, Time alive: {pygame.time.get_ticks() / 1000}")
                 print("Game over!")
                 sys.exit()
+            for shot in shots:
+                if asteroid.collides_with(shot):
+                    log_event("asteroid_shot")
+                    asteroid.split()
+                    score += 10
 
         for item in drawable:
             item.draw(screen)
